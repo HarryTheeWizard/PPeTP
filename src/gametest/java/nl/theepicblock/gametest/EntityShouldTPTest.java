@@ -1,13 +1,13 @@
 package nl.theepicblock.gametest;
 
 import net.fabricmc.fabric.api.gametest.v1.GameTest;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.SpawnReason;
-import net.minecraft.entity.passive.TameableEntity;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EntityEntitySpawnReason;
+import net.minecraft.world.entity.TamableAnimal;
 import net.minecraft.registry.Registries;
 import net.minecraft.test.TestContext;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.core.BlockPos;
 import nl.theepicblock.gametest.util.FakePlayer;
 import nl.theepicblock.ppetp.PetTeleporter;
 import nl.theepicblock.ppetp.PlayerDuck;
@@ -23,7 +23,7 @@ public class EntityShouldTPTest {
 
         for (var entityType : Registries.ENTITY_TYPE) {
             var pos = range.next().toBottomCenterPos();
-            var entity = entityType.create(world, SpawnReason.COMMAND);
+            var entity = entityType.create(world, EntitySpawnReason.COMMAND);
             if (entity == null) {
                 context.assertFalse(shouldTp(entityType), " precondition failed, "+Registries.ENTITY_TYPE.getId(entityType)+" should tp but it could not be created");
                 continue;
@@ -31,13 +31,13 @@ public class EntityShouldTPTest {
             entity.setInvulnerable(true);
             entity.setPosition(pos);
             world.spawnEntity(entity);
-            if (entity instanceof TameableEntity pet) {
+            if (entity instanceof TamableAnimal pet) {
                 var player = FakePlayer.fakePlayer(world);
                 player.getAbilities().allowFlying = true;
                 player.getAbilities().flying = true;
                 player.setPosition(pos.add(0, 500, 0));
                 world.spawnEntity(player);
-                world.getServer().getPlayerManager().respawnPlayer(player, true, Entity.RemovalReason.KILLED);
+                world.getServer().getPlayerList().respawnPlayer(player, true, Entity.RemovalReason.KILLED);
                 pet.setTamedBy(player);
 
                 // Simulate unload

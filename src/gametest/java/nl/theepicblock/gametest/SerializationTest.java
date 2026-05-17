@@ -3,12 +3,12 @@ package nl.theepicblock.gametest;
 import com.mojang.authlib.GameProfile;
 import com.mojang.serialization.Dynamic;
 import net.fabricmc.fabric.api.gametest.v1.GameTest;
-import net.minecraft.datafixer.TypeReferences;
-import net.minecraft.nbt.NbtCompound;
+import net.minecraft.util.datafix.fixes.References;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtOps;
-import net.minecraft.storage.NbtReadView;
+import net.minecraft.world.level.storage.TagValueInput;
 import net.minecraft.test.TestContext;
-import net.minecraft.util.ErrorReporter;
+import net.minecraft.util.ProblemReporter;
 import nl.theepicblock.gametest.util.FakePlayer;
 import nl.theepicblock.ppetp.PlayerDuck;
 import nl.theepicblock.ppetp.test.Util;
@@ -37,7 +37,7 @@ public class SerializationTest {
         var newNbt = context.getWorld().getServer().getDataFixer().update(TypeReferences.PLAYER, dyn, version, LATEST_VERSION).cast(NbtOps.INSTANCE);
 
         // Load data
-        var reader = NbtReadView.create(new ErrorReporter.Logging(LOGGER), context.getWorld().getRegistryManager(), (NbtCompound)newNbt);
+        var reader = TagValueInput.create(new ProblemReporter.DISCARDING(LOGGER), context.getWorld().registryAccess(), (CompoundTag)newNbt);
         var player = FakePlayer.fakePlayer(context.getWorld());
         player.readData(reader);
 

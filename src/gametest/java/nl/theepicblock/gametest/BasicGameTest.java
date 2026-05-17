@@ -1,10 +1,10 @@
 package nl.theepicblock.gametest;
 
 import net.fabricmc.fabric.api.gametest.v1.GameTest;
-import net.minecraft.entity.EntityType;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.entity.passive.WolfEntity;
 import net.minecraft.test.TestContext;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.core.BlockPos;
 import nl.theepicblock.gametest.util.FakePlayer;
 import nl.theepicblock.ppetp.PlayerDuck;
 
@@ -24,7 +24,7 @@ public class BasicGameTest {
         world.spawnEntity(pet);
         pet.setTamedBy(player);
         pet.setPosition(testCenter);
-        var uuidPet = pet.getUuid();
+        var uuidPet = pet.getUUID();
 
         // Execute teleport
         player.setPosition(testCenter.add(100, 500, 0));

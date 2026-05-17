@@ -1,16 +1,16 @@
 {
   "required": true,
   "package": "nl.theepicblock.ppetp.mixin",
-  "compatibilityLevel": "JAVA_21",
+  "compatibilityLevel": "JAVA_25",
   "mixins": [
     "AddFixerTo4661",
     "AddNbtToSchema",
     "EntityAccessor",
     "EntityUnloadListener",
-    "MobEntityAccessor",
-    "ServerPlayerEntityMixin",
-    "TameableEntityAccessor",
-    "TameableEntityMixin"
+    "MobAccessor",
+    "ServerPlayerMixin",
+    "TamableAnimalAccessor",
+    "TamableAnimalMixin"
   ],
   "injectors": {
     "defaultRequire": 1
